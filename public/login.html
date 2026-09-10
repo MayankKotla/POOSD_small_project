@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In — Personal Contact Manager</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="auth-card">
+    <h1>Welcome back</h1>
+    <p class="subtitle">Log in to your Personal Contact Manager</p>
+
+    <div id="login-banner" class="banner"></div>
+
+    <form id="login-form" novalidate>
+      <div class="field">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" name="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" name="password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="submit">Log in</button>
+    </form>
+
+    <p class="switch-link">Don't have an account? <a href="register.html">Sign up</a></p>
+    <p class="mock-note">Running against mock data — try demo@example.com / password123, or register a new account below.</p>
+  </div>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

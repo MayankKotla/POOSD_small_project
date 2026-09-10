@@ -1,0 +1,140 @@
+/* Shared styles for auth pages (login/register).
+   Kept in one file so the front-end has one consistent look
+   as more pages (contacts list, search) get added later. */
+
+:root {
+  --ink: #16181c;
+  --ink-muted: #6b7280;
+  --border: #d8dade;
+  --surface: #ffffff;
+  --page-bg: #f4f5f7;
+  --accent: #2a78d6;
+  --accent-hover: #1f5fb0;
+  --error: #d6493a;
+  --error-bg: #fdecea;
+  --success: #1a8a5f;
+  --success-bg: #e9f8f1;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--page-bg);
+  font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--ink);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.auth-card h1 {
+  font-size: 1.4rem;
+  margin: 0 0 4px;
+}
+
+.auth-card p.subtitle {
+  margin: 0 0 24px;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.field input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.name-row {
+  display: flex;
+  gap: 12px;
+}
+
+.name-row .field {
+  flex: 1;
+}
+
+button.submit {
+  width: 100%;
+  padding: 11px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+button.submit:hover { background: var(--accent-hover); }
+button.submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.switch-link {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+}
+
+.switch-link a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.banner {
+  display: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+.banner.error {
+  display: block;
+  background: var(--error-bg);
+  color: var(--error);
+}
+
+.banner.success {
+  display: block;
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.mock-note {
+  margin-top: 20px;
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  text-align: center;
+}
