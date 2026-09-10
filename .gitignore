@@ -1,0 +1,16 @@
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# PHP / dependency clutter
+vendor/
+composer.lock
+
+# Secrets — never commit real DB credentials
+includes/db_config.php
+.env
+
+# Node (if any front-end tooling gets added later)
+node_modules/
