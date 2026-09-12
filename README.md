@@ -41,13 +41,45 @@ public/     Front-end — HTML/CSS/JS served by Apache
 
 ## Local setup
 
-1. Copy `includes/db_config.example.php` to `includes/db_config.php` and fill
-   in real DB credentials (this file is gitignored — never commit it).
-2. Point Apache's document root at this folder, or copy it into
-   `/var/www/html` on the droplet.
-3. Import the `Users` / `Contacts` schema into MySQL.
+Requires PHP with the `mysqli` extension and MySQL 8.0, matching the committed
+`team12SmallProject.sql` dump.
+
+1. From the repository root, copy the configuration if it does not already exist:
+
+   ```bash
+   cp -n includes/db_config.example.php includes/db_config.php
+   ```
+
+2. Edit `includes/db_config.php`. Keep `DB_NAME` as `team12SmallProject` and
+   replace the placeholder MySQL username/password with the application
+   credentials from the database team. `DB_HOST=localhost` means MySQL runs
+   on the same machine as PHP. `DB_PORT` is optional and defaults to 3306.
+   The real configuration is gitignored; never commit it.
+
+3. Use the database the team already created. Only import the SQL dump into a
+   fresh, empty database: it contains `DROP TABLE` statements that would remove
+   existing tables and their data.
+
+4. Check the connection from the repository root on the machine running PHP:
+
+   ```bash
+   php -r 'require "includes/db.php"; $db = get_db(); echo "Database connection successful\n"; $db->close();'
+   ```
+
+`includes/db.php` provides `get_db()`, which reads the private configuration,
+opens a MySQL connection, and sets its character encoding to `utf8mb4`.
+It enables MySQL exceptions so future endpoints can return controlled JSON
+errors. The endpoint code must catch unexpected exceptions without returning
+database details to the browser.
+
+The database connection is the first API milestone. Registration, login, and
+contact endpoints are still to come; the frontend currently uses mock data.
 
 ## Deployment
 
 Hosted on a DigitalOcean droplet (LAMP stack) under a custom domain — see the
 team's project docs for the live URL once DNS is finalized.
+
+For web deployment, serve `public/` as Apache's document root and map `/api/`
+to the repository's `api/` directory once the endpoints exist. Keep `includes/`,
+the SQL dump, and `.git/` outside the public document root.
