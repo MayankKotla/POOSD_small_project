@@ -72,8 +72,41 @@ It enables MySQL exceptions so future endpoints can return controlled JSON
 errors. The endpoint code must catch unexpected exceptions without returning
 database details to the browser.
 
-The database connection is the first API milestone. Registration, login, and
+The database connection and registration endpoint are implemented. Login and
 contact endpoints are still to come; the frontend currently uses mock data.
+
+## Registration API
+
+`POST /api/register.php` accepts `Content-Type: application/json` with
+`firstName`, `lastName`, `email`, and `password` as strings. It uses `get_db()`
+and the existing `Users` table; account emails are stored in `Users.Login`.
+
+- Names are trimmed and limited to 50 Unicode characters, with no control characters.
+- Emails are trimmed, lowercased, validated, and limited to 50 characters to match `Login`.
+- Passwords require at least 8 Unicode characters, at most 72 UTF-8 bytes, and no null bytes.
+  They are not trimmed. Only a hash from PHP's `password_hash()` is stored.
+- The insert uses a prepared statement, and the unique `Login` index rejects duplicate accounts.
+
+Every response is JSON with `success` and `error`. Successful creation returns
+HTTP `201` with `{"success":true,"error":""}`. Invalid fields or malformed JSON
+return `400`, duplicate emails `409`, unsupported methods `405`, non-JSON
+content `415`, and requests over 16 KiB `413`. Database/configuration failures
+return `500` with a generic error; private database details are not returned.
+
+For a local API check, first configure the database as described above, then run
+`php -S 127.0.0.1:8000 -t api`. Send a POST to
+`http://127.0.0.1:8000/register.php` from Postman with JSON such as:
+
+```json
+{"firstName":"Test","lastName":"User","email":"api-test@example.com","password":"test-password-123"}
+```
+
+This creates a test account in the configured database. Repeating it should
+return `409`. Opening the address in a browser sends GET and should return `405`.
+
+Keep the frontend in mock mode until login is implemented. Before connecting
+the UI, update `callApi()` to read JSON error responses even when `res.ok` is
+false, so validation and duplicate-email messages can be displayed.
 
 ## Deployment
 
