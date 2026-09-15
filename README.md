@@ -72,8 +72,8 @@ It enables MySQL exceptions so future endpoints can return controlled JSON
 errors. The endpoint code must catch unexpected exceptions without returning
 database details to the browser.
 
-The database connection and registration endpoint are implemented. Login and
-contact endpoints are still to come; the frontend currently uses mock data.
+The database connection, registration, and login endpoints are implemented.
+Contact endpoints are still to come; the frontend currently uses mock data.
 
 ## Registration API
 
@@ -104,9 +104,37 @@ For a local API check, first configure the database as described above, then run
 This creates a test account in the configured database. Repeating it should
 return `409`. Opening the address in a browser sends GET and should return `405`.
 
-Keep the frontend in mock mode until login is implemented. Before connecting
-the UI, update `callApi()` to read JSON error responses even when `res.ok` is
-false, so validation and duplicate-email messages can be displayed.
+## Login API
+
+`POST /api/login.php` takes an email and password as JSON. It finds the account
+in `Users.Login` and checks the stored hash with `password_verify()`. Input rules
+are the same as registration, and passwords are not trimmed.
+
+Success returns `200` and `{"success":true,"id":123,"error":""}`, where `id`
+is the account's database ID. A wrong password or unknown email returns `401`
+and `{"success":false,"error":"Incorrect email or password."}`. Other errors
+use the same statuses as registration.
+
+Login saves the account ID in a PHP session and replaces the old session ID.
+The `team12_session` cookie is HttpOnly, uses SameSite=Lax, and gets the Secure
+flag on HTTPS. Use HTTPS on the live server. If a proxy handles HTTPS, configure
+the trusted web server so PHP knows the request used HTTPS. PHP's session
+directory must be writable and outside the public document root.
+
+Contact endpoints should call `require_user_id()` from `includes/auth.php`.
+It returns the logged-in account ID or a `401` error. Use that ID when checking
+who owns a contact.
+
+With the local API server running, POST this to
+`http://127.0.0.1:8000/login.php` after registering the test account:
+
+```json
+{"email":"api-test@example.com","password":"test-password-123"}
+```
+
+Keep cookies enabled in Postman. Logout and session-status endpoints are still
+to come. The frontend still uses mock data; its `callApi()` error handling needs
+updating before switching it to the real endpoints.
 
 ## Deployment
 
