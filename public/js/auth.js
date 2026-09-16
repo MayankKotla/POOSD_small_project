@@ -14,7 +14,7 @@
  * Nothing else in this file (or in login.html / register.html) needs to
  * change — callApi() is the only place that knows about mock vs. real.
  */
-const USE_MOCK_API = true;
+const USE_MOCK_API = false;
 
 // A couple of fake accounts so login can be demoed against register.
 const MOCK_USERS = [
