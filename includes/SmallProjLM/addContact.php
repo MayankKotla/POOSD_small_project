@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-require_once __DIR__ . '/../includes/api.php';
-require_once __DIR__ . '/../includes/db.php';
-require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../api.php';
+require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../auth.php';
 
 // Pulls the logged-in user's ID from the session cookie — never trust
 // a client-supplied userId for who owns this contact.
