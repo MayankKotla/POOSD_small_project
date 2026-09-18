@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Contacts - Personal Contact Manager</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <main class="contacts-page">
+
+    <section class="contacts-panel">
+
+      <!-- Header -->
+      <div class="contacts-header">
+
+        <div>
+          <h1>My Contacts</h1>
+
+          <p class="subtitle">
+            View and manage your saved contacts.
+          </p>
+        </div>
+
+        <button
+          id="logout-button"
+          class="secondary-button"
+        >
+          Log out
+        </button>
+
+      </div>
+
+      <!-- Message Banner -->
+      <div
+        id="contacts-banner"
+        class="banner"
+      ></div>
+
+      <!-- Add/Edit Contact Form -->
+      <div
+        id="contact-form-container"
+        class="contact-form-container hidden"
+      >
+
+        <h2 id="contact-form-title">
+          Add Contact
+        </h2>
+
+        <form id="contact-form">
+
+          <div class="form-grid">
+
+            <div class="field">
+
+              <label for="first-name">
+                First Name
+              </label>
+
+              <input
+                type="text"
+                id="first-name"
+                required
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label for="last-name">
+                Last Name
+              </label>
+
+              <input
+                type="text"
+                id="last-name"
+                required
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label for="email">
+                Email
+              </label>
+
+              <input
+                type="email"
+                id="email"
+                required
+              >
+
+              <span id="email-error" class="field-error"></span>
+
+            </div>
+
+            <div class="field">
+
+              <label for="phone">
+                Phone
+              </label>
+
+              <input
+                type="tel"
+                id="phone"
+                required
+              >
+
+            </div>
+
+          </div>
+
+          <div class="form-actions">
+
+            <button
+              type="button"
+              id="cancel-contact-button"
+              class="secondary-button"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              class="submit"
+            >
+              Save Contact
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+      <!-- Search / Add Toolbar -->
+      <div class="contacts-toolbar">
+
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search contacts..."
+        >
+
+        <button
+          id="search-button"
+          class="submit"
+        >
+          Search
+        </button>
+
+        <button
+          id="add-contact-button"
+          class="submit"
+        >
+          Add Contact
+        </button>
+
+      </div>
+
+      <!-- Contacts Table -->
+      <div class="contacts-table-wrapper">
+
+        <table class="contacts-table">
+
+          <thead>
+
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Date Created</th>
+              <th>Actions</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="contacts-table-body">
+
+            <!-- Temporary test contact -->
+            <tr>
+
+              <td>John</td>
+
+              <td>Doe</td>
+
+              <td>
+                john@example.com
+              </td>
+
+              <td>
+                407-555-1234
+              </td>
+
+              <td>
+                09/13/2026
+              </td>
+
+              <td>
+
+                <button
+                  class="edit-button"
+                >
+                  Edit
+                </button>
+
+                <button
+                  class="delete-button"
+                >
+                  Delete
+                </button>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="js/contacts.js"></script>
+
+</body>
+
+</html>
