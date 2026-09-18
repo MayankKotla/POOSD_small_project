@@ -27,17 +27,11 @@ public/     Front-end — HTML/CSS/JS served by Apache
   js/
 ```
 
-## API contract (draft — see SwaggerHub for the source of truth)
+## API contract
 
-| Endpoint                  | Method | Body / Query                          | Returns |
-|----------------------------|--------|----------------------------------------|---------|
-| `/api/register.php`        | POST   | `{firstName, lastName, email, password}` | `{success, error}` |
-| `/api/login.php`           | POST   | `{email, password}`                    | `{success, id}` |
-| `/api/getContacts.php`     | GET    | `?id=<userId>`                         | `[{id, firstName, lastName, phone, email}, ...]` |
-| `/api/addContact.php`      | POST   | `{userId, firstName, lastName, phone, email}` | `{success, error}` |
-| `/api/updateContact.php`   | POST   | `{id, firstName, lastName, phone, email}` | `{success, error}` |
-| `/api/deleteContact.php`   | POST   | `{id}`                                 | `{success, error}` |
-| `/api/searchContacts.php`  | GET    | `?id=<userId>&search=<term>`           | `[{id, firstName, lastName, phone, email}, ...]` |
+The core endpoints are implemented. See [docs/API.md](docs/API.md) for request
+formats, session cookies, pagination, tests, and the frontend handoff. Update the
+team's SwaggerHub definition to match this contract before submission.
 
 ## Local setup
 
@@ -72,8 +66,8 @@ It enables MySQL exceptions so future endpoints can return controlled JSON
 errors. The endpoint code must catch unexpected exceptions without returning
 database details to the browser.
 
-The database connection, registration, and login endpoints are implemented.
-Contact endpoints are still to come; the frontend currently uses mock data.
+Registration, login, contact CRUD, listing, search, session checks, and logout are implemented.
+The contacts frontend still needs integration and live-server verification.
 
 ## Registration API
 
@@ -94,8 +88,8 @@ content `415`, and requests over 16 KiB `413`. Database/configuration failures
 return `500` with a generic error; private database details are not returned.
 
 For a local API check, first configure the database as described above, then run
-`php -S 127.0.0.1:8000 -t api`. Send a POST to
-`http://127.0.0.1:8000/register.php` from Postman with JSON such as:
+`php -S 127.0.0.1:8000 -t public dev-router.php`. Send a POST to
+`http://127.0.0.1:8000/api/register.php` from Postman with JSON such as:
 
 ```json
 {"firstName":"Test","lastName":"User","email":"api-test@example.com","password":"test-password-123"}
@@ -126,15 +120,15 @@ It returns the logged-in account ID or a `401` error. Use that ID when checking
 who owns a contact.
 
 With the local API server running, POST this to
-`http://127.0.0.1:8000/login.php` after registering the test account:
+`http://127.0.0.1:8000/api/login.php` after registering the test account:
 
 ```json
 {"email":"api-test@example.com","password":"test-password-123"}
 ```
 
-Keep cookies enabled in Postman. Logout and session-status endpoints are still
-to come. The frontend still uses mock data; its `callApi()` error handling needs
-updating before switching it to the real endpoints.
+Keep cookies enabled in Postman. `GET /api/me.php` checks the session;
+`POST /api/logout.php` ends it. The login and registration pages use the real API
+and display JSON error messages returned by the server.
 
 ## Deployment
 
@@ -142,5 +136,5 @@ Hosted on a DigitalOcean droplet (LAMP stack) under a custom domain — see the
 team's project docs for the live URL once DNS is finalized.
 
 For web deployment, serve `public/` as Apache's document root and map `/api/`
-to the repository's `api/` directory once the endpoints exist. Keep `includes/`,
+to the repository's `api/` directory. Keep `includes/`,
 the SQL dump, and `.git/` outside the public document root.
