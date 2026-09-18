@@ -1,20 +1,5 @@
-/*
- * auth.js — login + registration logic, shared by login.html and register.html
- *
- * MOCK MODE
- * ---------
- * USE_MOCK_API is on by default so this page is fully clickable/demoable
- * before the real PHP endpoints exist. Every function below is written
- * against the API contract documented in the repo's README.md:
- *
- *   POST /api/register.php   { firstName, lastName, email, password } -> { success, error }
- *   POST /api/login.php      { email, password }                      -> { success, id, error }
- *
- * When Arnov/Lucas's real endpoints are live, flip this flag to false.
- * Nothing else in this file (or in login.html / register.html) needs to
- * change — callApi() is the only place that knows about mock vs. real.
- */
-const USE_MOCK_API = true;
+// Login and registration use the PHP API. Mock mode is for local UI demos only.
+const USE_MOCK_API = false;
 
 // A couple of fake accounts so login can be demoed against register.
 const MOCK_USERS = [
@@ -38,10 +23,14 @@ async function callApi(endpoint, body) {
     body: JSON.stringify(body)
   });
 
-  if (!res.ok) {
+  const result = await res.json();
+  if (!result || typeof result.success !== "boolean") {
+    throw new Error("Unexpected API response");
+  }
+  if (!res.ok && result.success) {
     throw new Error(`Server returned ${res.status}`);
   }
-  return res.json();
+  return result;
 }
 
 /**
@@ -114,7 +103,7 @@ function initLoginForm() {
     try {
       const result = await callApi("login.php", { email, password });
       if (result.success) {
-        showBanner(banner, `Logged in! (user id ${result.id})`, "success");
+        showBanner(banner, "Logged in!", "success");
         // Once the contacts page exists: window.location.href = "contacts.html";
       } else {
         showBanner(banner, result.error || "Login failed.", "error");
