@@ -30,8 +30,10 @@ public/     Front-end — HTML/CSS/JS served by Apache
 ## API contract
 
 The core endpoints are implemented. See [docs/API.md](docs/API.md) for request
-formats, session cookies, pagination, tests, and the frontend handoff. Update the
-team's SwaggerHub definition to match this contract before submission.
+formats, session cookies, pagination, tests, and the frontend handoff.
+
+The full OpenAPI 3.0 definition is maintained on SwaggerHub:
+[Team 12 Contact Manager API](https://app.swaggerhub.com/apis/ucf-6ce/team-12-contact-manager-api/1.0.0).
 
 ## Local setup
 
