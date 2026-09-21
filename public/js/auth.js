@@ -104,7 +104,7 @@ function initLoginForm() {
       const result = await callApi("login.php", { email, password });
       if (result.success) {
         showBanner(banner, "Logged in!", "success");
-        // Once the contacts page exists: window.location.href = "contacts.html";
+        window.location.href = "contacts.html";
       } else {
         showBanner(banner, result.error || "Login failed.", "error");
       }
