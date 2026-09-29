@@ -4,14 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Log In — Personal Contact Manager</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20260929">
 </head>
-<body>
-  <div class="auth-card">
+<body class="auth-page">
+  <main class="auth-layout">
+    <section class="auth-intro" aria-label="Personal Contact Manager">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">C<span>•</span></span><span>Contact Manager<span class="brand-caption">YOUR PEOPLE, IN ONE PLACE</span></span></div>
+      <div class="intro-copy">
+        <p class="eyebrow">A LITTLE MORE CONNECTED</p>
+        <h2>Good connections.<br>All together.</h2>
+        <p>A simple space for the people who matter. Find a number, save a new connection, and pick up where you left off.</p>
+      </div>
+      <p class="intro-footer">Personal Contact Manager <span> / </span> Team 12</p>
+    </section>
+    <div class="auth-card">
     <h1>Welcome back</h1>
     <p class="subtitle">Log in to your Personal Contact Manager</p>
 
-    <div id="login-banner" class="banner"></div>
+    <div id="login-banner" class="banner" role="status" aria-live="polite"></div>
 
     <form id="login-form" novalidate>
       <div class="field">
@@ -28,6 +38,9 @@
     <p class="switch-link">Don't have an account? <a href="register.html">Sign up</a></p>
   </div>
 
+  </main>
+
   <script src="js/auth.js?v=3"></script>
 </body>
 </html>
+
